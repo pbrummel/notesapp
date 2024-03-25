@@ -7,5 +7,5 @@ type Todo @model {
   clientId: ID
   name: String!
   description: String
-  completed Boolean
+  completed: Boolean
 }
