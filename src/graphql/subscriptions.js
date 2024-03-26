@@ -2,8 +2,11 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateNote = /* GraphQL */ `
-  subscription OnCreateNote($filter: ModelSubscriptionNoteFilterInput) {
-    onCreateNote(filter: $filter) {
+  mutation CreateNote(
+    $input: CreateNoteInput!
+    $condition: ModelNoteConditionInput
+  ) {
+    createNote(input: $input, condition: $condition) {
       id
       clientId
       name
@@ -15,9 +18,12 @@ export const onCreateNote = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateNote = /* GraphQL */ `
-  subscription OnUpdateNote($filter: ModelSubscriptionNoteFilterInput) {
-    onUpdateNote(filter: $filter) {
+export const updateNote = /* GraphQL */ `
+  mutation UpdateNote(
+    $input: UpdateNoteInput!
+    $condition: ModelNoteConditionInput
+  ) {
+    updateNote(input: $input, condition: $condition) {
       id
       clientId
       name
@@ -29,9 +35,12 @@ export const onUpdateNote = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteNote = /* GraphQL */ `
-  subscription OnDeleteNote($filter: ModelSubscriptionNoteFilterInput) {
-    onDeleteNote(filter: $filter) {
+export const deleteNote = /* GraphQL */ `
+  mutation DeleteNote(
+    $input: DeleteNoteInput!
+    $condition: ModelNoteConditionInput
+  ) {
+    deleteNote(input: $input, condition: $condition) {
       id
       clientId
       name
@@ -43,3 +52,4 @@ export const onDeleteNote = /* GraphQL */ `
     }
   }
 `;
+
