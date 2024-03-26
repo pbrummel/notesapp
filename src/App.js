@@ -159,24 +159,25 @@ const onChange = (e) => {
 
     return (
         <div style={styles.container}>
+            <h1>Today's to-do List</h1>
             <Input
                 onChange={onChange}
                 value={state.form.name}
-                placeholder="Note Name"
+                placeholder="To-do Item"
                 name='name'
                 style={styles.input}
             />
             <Input
                 onChange={onChange}
                 value={state.form.description}
-                placeholder="Note description"
+                placeholder="Item description"
                 name='description'
                 style={styles.input}
             />
             <Button
                 onClick={createNote}
                 type="primary"
-            >Create Note</Button>    
+            >Add to list</Button>    
             <List
                 loading={state.loading}
                 dataSource={state.notes}
