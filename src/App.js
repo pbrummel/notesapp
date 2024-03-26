@@ -94,7 +94,7 @@ const deleteNote = async({ id }) => {
       } catch (err) {
         console.error(err)
     }
-  };
+};
 
 const updateNote = async(note) => {
     const index = state.notes.findIndex(n => n.id === note.id)
@@ -108,7 +108,7 @@ const updateNote = async(note) => {
         })
         console.log('note successfully updated!')
     } catch (err) {
-        console.errror(err)
+        console.error(err)
     }
 };
     
