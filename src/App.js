@@ -140,23 +140,34 @@ const onChange = (e) => {
     }
 
     function renderItem(item) {
-        return (
-            <List.Item 
-                style={styles.item}
-                actions={[
-                    <p style={styles.p} onClick={() => deleteNote(item)}>Delete</p>,
-                    <p style={styles.p} onClick={() => updateNote(item)}>
-                        {item.completed ? 'completed' : 'mark completed'}
-                    </p>
-                  ]}>
-            <List.Item.Meta
-                title={item.name}
-                description={item.description}
-            />
-            </List.Item>
-        )
-    };  
-
+      return (
+          <List.Item 
+              style={styles.item}
+              actions={[
+                  <div key="mark-as-completed">
+                      <p style={styles.p}>
+                          {item.completed ? 'Complete' : 'Check when completed'}
+                      </p>
+                      <div>
+                          <input
+                              type="checkbox"
+                              checked={item.completed}
+                              onChange={() => updateNote(item)}
+                          />
+                      </div>
+                  </div>,
+                  item.completed && (
+                      <p key="delete" style={styles.p} onClick={() => deleteNote(item)}>Delete?</p>
+                  )
+              ]}
+          >
+              <List.Item.Meta
+                  title={item.name}
+                  description={item.description}
+              />
+              </List.Item>
+      );
+  };  
     return (
         <div style={styles.container}>
             <h1>Today's to-do List</h1>
