@@ -1,5 +1,5 @@
 import './App.css';
-import React, {useEffect, useReducer} from 'react';
+import React, {useEffect, useReducer, useState} from 'react';
 // V6: https://docs.amplify.aws/react/build-a-backend/graphqlapi/set-up-graphql-api/#add-your-first-record
 import { generateClient } from 'aws-amplify/api';
 import { List, Input, Button } from 'antd';
@@ -42,6 +42,7 @@ function reducer(state, action) {
 
 const App = () => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const [completedCount, setCompletedCount] = useState(0);
 
     const client = generateClient();
 
@@ -96,21 +97,24 @@ const deleteNote = async({ id }) => {
     }
 };
 
-const updateNote = async(note) => {
-    const index = state.notes.findIndex(n => n.id === note.id)
-    const notes = [...state.notes]
-    notes[index].completed = !note.completed
-    dispatch({ type: 'SET_NOTES', notes})
+const updateNote = async (note) => {
+    const index = state.notes.findIndex(n => n.id === note.id);
+    const notes = [...state.notes];
+    const updatedCompletedCount = note.completed ? completedCount - 1 : completedCount + 1; // Decrement if completed, increment if not
+    setCompletedCount(updatedCompletedCount);
+    notes[index].completed = !note.completed;
+    dispatch({ type: 'SET_NOTES', notes });
     try {
         await client.graphql({
-        query: UpdateNote,
-        variables: { input: { id: note.id, completed: notes[index].completed } }
-        })
-        console.log('note successfully updated!')
+            query: UpdateNote,
+            variables: { input: { id: note.id, completed: notes[index].completed } }
+        });
+        console.log('note successfully updated!');
     } catch (err) {
-        console.error(err)
+        console.error(err);
     }
-};
+  };
+
     
 const onChange = (e) => {
     dispatch({ type: 'SET_INPUT', name: e.target.name, value: e.target.value });
@@ -167,35 +171,41 @@ const onChange = (e) => {
               />
               </List.Item>
       );
+      
   };  
-    return (
-        <div style={styles.container}>
-            <h1>Today's to-do List</h1>
-            <Input
-                onChange={onChange}
-                value={state.form.name}
-                placeholder="To-do Item"
-                name='name'
-                style={styles.input}
-            />
-            <Input
-                onChange={onChange}
-                value={state.form.description}
-                placeholder="Item description"
-                name='description'
-                style={styles.input}
-            />
-            <Button
-                onClick={createNote}
-                type="primary"
-            >Add to list</Button>    
-            <List
-                loading={state.loading}
-                dataSource={state.notes}
-                renderItem={renderItem}
-            />
-      </div>
-      );
-    }
-    
-    export default App;
+
+  
+  return (
+    <div style={styles.container}>
+        <h1>Today's to-do List</h1>
+        <Input
+            onChange={onChange}
+            value={state.form.name}
+            placeholder="To-do Item"
+            name='name'
+            style={styles.input}
+        />
+        <Input
+            onChange={onChange}
+            value={state.form.description}
+            placeholder="Item description"
+            name='description'
+            style={styles.input}
+        />
+        <Button
+            onClick={createNote}
+            type="primary"
+        >Add to list</Button>    
+        <List
+            loading={state.loading}
+            dataSource={state.notes}
+            renderItem={renderItem}
+        />
+      <hr /> {/* Horizontal line */}
+      <p>Total completed items: {completedCount}</p> {/* Running total */}
+    </div>
+);
+}
+
+
+export default App;
