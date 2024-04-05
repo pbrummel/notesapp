@@ -45,3 +45,6 @@
   border: none;
 }
 
+.green-button:hover {
+  background-color: #52c41a;
+}
