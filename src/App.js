@@ -140,7 +140,8 @@ const onChange = (e) => {
         container: {padding: 20},
         input: {marginBottom: 10},
         item: { textAlign: 'left' },
-        p: { color: '#1890ff' }
+        p: { color: '#1890ff' },
+        deleteButton: { color: 'white', fontWeight: "bold" }
     }
 
     function renderItem(item) {
@@ -161,7 +162,7 @@ const onChange = (e) => {
                       </div>
                   </div>,
                   item.completed && (
-                      <p key="delete" style={styles.p} onClick={() => deleteNote(item)}>Delete?</p>
+                      <button key="delete" class="green-button" style={styles.deleteButton} onClick={() => deleteNote(item)}>Delete?</button>
                   )
               ]}
           >
